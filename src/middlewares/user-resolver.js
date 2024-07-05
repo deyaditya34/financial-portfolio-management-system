@@ -9,7 +9,7 @@ async function userResolver(req, res, next) {
     throw new httpError.Forbidden("Access Denied");
   }
 
-  const user = authService.getUserFromToken(token);
+  const user = await authService.getUserFromToken(token);
 
   if (!user) {
     throw new httpError.Forbidden("Invalid Token");

@@ -45,13 +45,13 @@ async function getUserFromToken(token) {
   if (!payload) {
     return null;
   }
-
+  
   const username = payload.username;
   
   const user = await database
     .getCollection(config.COLLECTION_NAME_USERS)
     .findOne({ username }, { projection: { _id: false, password: false } });
-
+ 
   return user;
 }
 

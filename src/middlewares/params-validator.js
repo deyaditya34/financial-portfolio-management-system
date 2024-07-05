@@ -5,9 +5,18 @@ const createParamsValidator =
   (req, res, next) => {
     const reqParams = Reflect.get(req, paramskey);
 
-    const missingParams = params.filter(
-      (param) => !Reflect.has(reqParams, param)
-    );
+    const missingParams = params.filter((param) => {
+      if (param === "asset" || param === "price") {
+        if (
+          req[paramskey]["type"] === "buy" ||
+          req[paramskey]["type"] === "sell"
+        ) {
+          return !Reflect.has(reqParams, param);
+        }
+      } else {
+        return !Reflect.has(reqParams, param);
+      }
+    });
 
     if (missingParams.length > 0) {
       throw new httpError.BadRequest(
