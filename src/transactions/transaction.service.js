@@ -7,5 +7,22 @@ async function insertTransaction(transactionDetails) {
     .insertOne(transactionDetails);
 }
 
+async function searchTransaction(username) {
+  return database
+    .getCollection(config.COLLECTION_NAME_TRANSACTIONS)
+    .find({ user: username })
+    .toArray();
+}
 
-module.exports = { insertTransaction };
+async function searchTransactionByAssetName(type, assetName, username) {
+  return database
+    .getCollection(config.COLLECTION_NAME_TRANSACTIONS)
+    .find({ type: type, asset: assetName, user: username })
+    .toArray();
+}
+
+module.exports = {
+  insertTransaction,
+  searchTransaction,
+  searchTransactionByAssetName,
+};

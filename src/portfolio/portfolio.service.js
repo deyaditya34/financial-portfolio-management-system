@@ -13,17 +13,25 @@ async function searchAssetInPortfolio(assetName, user) {
     .findOne({ asset: assetName, user });
 }
 
+async function getAllAssetInPortfolio(user) {
+  return database
+    .getCollection(config.COLLECTION_NAME_PORTFOLIO)
+    .find({ user })
+    .toArray();
+}
+
 async function updateAssetInPortfolio(assetName, user, amount, price) {
   return database
     .getCollection(config.COLLECTION_NAME_PORTFOLIO)
     .updateOne(
       { asset: assetName, user },
-      { $inc: { amount }, $set: { price } },
+      { $inc: { amount }, $set: { price } }
     );
 }
 
 module.exports = {
   insertPortfolio,
   searchAssetInPortfolio,
+  getAllAssetInPortfolio,
   updateAssetInPortfolio,
 };

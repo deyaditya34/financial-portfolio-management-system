@@ -4,6 +4,7 @@ const config = require("./config");
 const database = require("./service-files/database_service");
 
 const authRouter = require("./auth/auth.router.api");
+const portfolioRouter = require("./portfolio/portfolio.router.api");
 const transactionRouter = require("./transactions/transaction.router.api");
 
 const errorHandler = require("./api-utils/error-handler");
@@ -21,7 +22,8 @@ async function start() {
 
   server.use(express.json());
 
-  server.use("/auth", authRouter);  
+  server.use("/auth", authRouter);
+  server.use("/portfolio", portfolioRouter);  
   server.use("/transaction", transactionRouter);
 
   server.use(notFoundHandler);
