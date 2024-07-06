@@ -3,7 +3,7 @@
 ### **_Project Overview_** ###
 This application aims to create a financial portfolio management system with features such as transaction handling, portfolio calculation and user authentication. The application allows users to create transaction, see their current balance, check their portfolio status and review their transaction history.
 
-### **_Dependencies_** ###
+### **_Tech Stack_** ###
 * **Node.js :** The project is built by using Node.js for all the server side developments.
 * **Express.js :** All the API's are built using express.js.
 * **MongoDB :** As a NoSQL database, it is very efficient for storing and managing data.  
@@ -43,6 +43,29 @@ This application aims to create a financial portfolio management system with fea
 ### **_Setup_** ###
 
 * Copy the **".env.example"** file and rename it as **".env"**. Modify the values as needed per requirements.
-* run the code **_npm init_** or **_npm i_** from the root directory.
 
+* Run **_npm install_** to install required packages.
+
+* Run the code **_npm run dev_** from the root directory.
+
+
+### **_API Documentation Link_** ###
+
+* Documentation Link - https://api.postman.com/collections/28955602-533e8495-39ef-4973-8a05-8623214c3361?access_key=PMAT-01J24FNJVEJF8PACJ2JZ3TZC3A
+
+
+###  NOTE  ###
+
+* Mongoose is not used at this project because I am not very proficient at using schema. If needed, I can learn it within very few days.
+
+* Atomicity and consistency is not maintained in the project due to I am not very proficient at it right now. If needed, this can be learnt too within a very short period of time.
+
+* Typescript is not used because I am more comfortable in javascript for now. If needed, this can be tackled too within very few days.
+
+* Also, mongodb aggregation queries are not used because within the stipulated time, I found it very challenging to understand the question and approach it properly. So, I kept it simple just to complete the project. If needed, the aggregation part also will be solved within few days. 
+
+* **SOME EXTRA FEATURES OF THE APPLICATION -** 
+   * The application maintains separate collection for the portfolio, transaction and the balance part of the user. 
+
+   * It maintains all the three collection with the creation of each transaction.
 
