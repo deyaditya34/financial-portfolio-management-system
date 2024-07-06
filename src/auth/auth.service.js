@@ -28,8 +28,9 @@ async function registerUser(username, password) {
     .insertOne(userDetails);
 }
 
-//
+// Function to handle the login process and if username and password validates, returns a token
 async function loginUser(username, password) {
+  // This function validates the user details 
   const user = await database
     .getCollection(config.COLLECTION_NAME_USERS)
     .findOne({
@@ -46,6 +47,7 @@ async function loginUser(username, password) {
   return token;
 }
 
+// Function to retreive the user details from the token
 async function getUserFromToken(token) {
   const payload = jwtService.decodeToken(token);
 
@@ -55,6 +57,7 @@ async function getUserFromToken(token) {
   
   const username = payload.username;
   
+  // Find the user in the database by the username, excluding the id and the password fields.
   const user = await database
     .getCollection(config.COLLECTION_NAME_USERS)
     .findOne({ username }, { projection: { _id: false, password: false } });
@@ -62,6 +65,7 @@ async function getUserFromToken(token) {
   return user;
 }
 
+// Exporting the functions to be used by other modules
 module.exports = {
   registerUser,
   loginUser,
