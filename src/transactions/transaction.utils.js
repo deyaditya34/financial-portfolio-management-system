@@ -1,3 +1,5 @@
+const balanceService = require("../balance/balance.service");
+
 function transactionValidator(transactionDetails) {
   let invalidStringTypeParams = [];
   let invalidTransactionType = "";
@@ -61,10 +63,6 @@ function transactionValidator(transactionDetails) {
     result += `type - '${invalidTransactionType}' should be 'string' type and between 'deposit', 'withdrawal', 'buy' or 'sell'.`;
   }
 
-  if (transactionDetails.price > transactionDetails.amount) {
-    result += ` Price - '${transactionDetails.price}' cannot be greater than amount - '${transactionDetails.amount}'`;
-  }
-
   if (result.length > 17) {
     return result;
   }
@@ -75,14 +73,37 @@ function transactionValidator(transactionDetails) {
 function transactionBuilder(transactionDetails) {
   const result = {};
 
-  Reflect.set(result, "type", transactionDetails.type);
-  Reflect.set(result, "amount", Number(transactionDetails.amount));
-  Reflect.set(result, "asset", transactionDetails.asset);
-  Reflect.set(result, "price", Number(transactionDetails.price));
-  Reflect.set(result, "date", new Date(transactionDetails.date));
-  Reflect.set(result, "user", transactionDetails.user.username);
+  if (
+    transactionDetails.type === "deposit" ||
+    transactionDetails.type === "withdrawal"
+  ) {
+    Reflect.set(result, "amount", Number(transactionDetails.amount));
+    Reflect.set(result, "date", new Date(transactionDetails.date));
+    Reflect.set(result, "type", transactionDetails.type);
+    Reflect.set(result, "user", transactionDetails.user.username);
+  } else {
+    Reflect.set(result, "type", transactionDetails.type);
+    Reflect.set(result, "asset", transactionDetails.asset);
+    Reflect.set(result, "amount", Number(transactionDetails.amount));
+    Reflect.set(result, "price", Number(transactionDetails.price));
+    Reflect.set(result, "date", new Date(transactionDetails.date));
+    Reflect.set(result, "user", transactionDetails.user.username);
+  }
 
   return result;
 }
 
-module.exports = { transactionValidator, transactionBuilder };
+async function depositUserBalance(user, amount) {
+  const existingUserBalance = await balanceService.searchUserBalance(user);
+
+  let result;
+  if (!existingUserBalance) {
+    result = await balanceService.insertUserBalance(user, amount);
+    return result;
+  }
+
+  result = await balanceService.updateUserBalance(user, amount);
+  return result;
+}
+
+module.exports = { transactionValidator, transactionBuilder, depositUserBalance };

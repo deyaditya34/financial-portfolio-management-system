@@ -7,4 +7,5 @@ async function insertTransaction(transactionDetails) {
     .insertOne(transactionDetails);
 }
 
-module.exports = {insertTransaction}
+
+module.exports = { insertTransaction };
